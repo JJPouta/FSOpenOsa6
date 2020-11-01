@@ -1,26 +1,34 @@
 
-export const setVoteNotification = (content) => {
-    
-    return {
-        type: 'VOTE',
-        content: content
-        }
-    
-  }
-  export const setCreateNotification = (anecdote) => {
+const showNotification = (content) => {
 
-    return {
-        type: 'ADD_NEW',
-        anecdote,
-      }
-  }
-
-  export const removeNotification = () => {
-    
-    return {
-      type: 'DEL_NOTIFICATION'
+  return {
+    type: 'CHANGE_NOTIFICATION',
+    content: content
     }
+
+}
+
+const hideNotification = () => {
+
+  return({type: 'REMOVE_NOTIFICATION'})
+
+}
+
+export const setNotification = (content,timeOut) => {
+    
+  return (dispatch) => {
+  
+    dispatch(showNotification(content))
+    
+    setTimeout(() => {
+      dispatch(hideNotification())
+    }, timeOut * 1000)
+
   }
+
+
+  }
+
 
 
   const reducer = (state = null, action) => {
@@ -28,13 +36,11 @@ export const setVoteNotification = (content) => {
     console.log('action', action)
     
     switch (action.type) {
-      case 'ADD_NEW':
-        const newNotification = action.anecdote.content
-        return `New anecdote added: ${newNotification}`
-    case 'VOTE':
-       return `You have voted ${action.content}`
-    case 'DEL_NOTIFICATION':
-        return null;
+      case 'CHANGE_NOTIFICATION':
+        const newNotification = action.content
+        return newNotification
+      case 'REMOVE_NOTIFICATION':
+        return null
     default:
     return state
     }  

@@ -13,7 +13,13 @@ const postNew = async (newAnecdote) => {
   return response.data
 }
 
+const  updateVotes = async (id,voteCount) => {
 
-export default {getAll,postNew}
+  const uString = `${baseUrl}/${id}`
+  const response = await axios.put(uString,voteCount)
+  return response.data
+}
+
+export default {getAll,postNew,updateVotes}
 
 
